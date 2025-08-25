@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>NumisCoin — Home</title>
+    <title>NumisCoin — About Us</title>
     <style>
         /* --------------------------- RESET & TOKENS --------------------------- */
         *, *::before, *::after { box-sizing: border-box; }
@@ -296,7 +296,7 @@
             position: relative;
             height: 100%;
             min-height: 300px;
-            background: url('placeholder-hero-home.jpg') center/cover no-repeat;
+            background: url('placeholder-hero-about.jpg') center/cover no-repeat;
             border-radius: var(--radius);
             transform: translateY(0);
             transition: transform 0.5s ease;
@@ -325,124 +325,32 @@
             }
         }
 
-        /* --------------------------- COIN CATEGORIES --------------------------- */
-        .coin-categories {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .category-card {
+        /* --------------------------- ABOUT SECTION --------------------------- */
+        .about-section {
             background: var(--surface);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.2s ease;
-        }
-        .category-card:hover {
-            transform: translateY(-4px);
-        }
-        .category-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        .category-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        /* --------------------------- FEATURED LISTINGS --------------------------- */
-        .featured-listings {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            padding: 2.5rem;
             margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
-        .listing-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: transform 0.2s ease;
+        .about-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .listing-card:hover {
-            transform: translateY(-4px);
-        }
-        .listing-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .listing-card-content {
-            padding: 1.5rem;
-        }
-        .listing-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
+        .about-section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
-        .listing-card p {
+        .about-section p {
             color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-        }
-        .listing-card .price {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--accent);
-        }
-        .listing-card a.cta-btn {
-            display: block;
-            background: var(--primary);
-            color: #fff;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            font-weight: 600;
-            text-align: center;
-            margin-top: 1rem;
-            transition: background 0.2s ease, transform 0.2s ease;
-        }
-        .listing-card a.cta-btn:hover {
-            background: var(--primary-600);
-            transform: translateY(-2px);
-        }
-
-        /* --------------------------- HISTORY SECTION --------------------------- */
-        .history-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .history-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1.5rem;
-            transition: transform 0.2s ease;
-        }
-        .history-card:hover {
-            transform: translateY(-4px);
-        }
-        .history-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        .history-card p {
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        @media (max-width: 768px) {
-            .history-section {
-                grid-template-columns: 1fr;
-            }
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
         /* --------------------------- CTA SECTION --------------------------- */
@@ -584,7 +492,7 @@
         }
 
         /* Accessibility: Focus styles */
-        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
             border-radius: var(--radius);
@@ -609,7 +517,7 @@
                 <span></span>
             </label>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="index.html" class="cta-btn">Home</a>
+                <a href="index.html">Home</a>
                 <div class="dropdown">
                     <span class="dropdown-toggle">Coins</span>
                     <div class="dropdown-menu">
@@ -618,7 +526,7 @@
                         <a href="modern.html">Modern Coins</a>
                     </div>
                 </div>
-                <a href="about.html">About Us</a>
+                <a href="about.html" class="cta-btn">About Us</a>
                 <a href="sell.html" >Sell and Purchase</a>
                 <a href="contact.html">Contact Us</a>
             </nav>
@@ -629,81 +537,28 @@
     <section class="hero">
         <div class="container hero-inner">
             <div class="hero-content">
-                <h1>Discover Rare Coins from Around the World</h1>
-                <p>Explore authenticated ancient, world, and modern coins from trusted dealers. Build your collection with confidence.</p>
-                <a href="#browse" class="hero-cta">Browse Now</a>
+                <h1>About NumisCoin</h1>
+                <p>Faizan Pathan — A Journey from Dhar to the World of Numismatics
+
+My name is Faizan Pathan, and I hail from Dhar, Madhya Pradesh. Since childhood, I’ve been deeply fascinated by coins and currency notes. While other kids were drawn to toys and games, I found myself captivated by the stories etched into old coins and the designs printed on faded notes. Each piece felt like a portal to another time — a silent witness to history.
+
+What began as a simple hobby soon grew into a lifelong passion. I started collecting not just for the sake of possession, but to understand the art, culture, and legacy behind each item. For me, numismatics is not just about collecting — it’s about preserving heritage, discovering forgotten tales, and connecting with the past in a tangible way.
+
+This passion inspired me to create a platform where fellow collectors can come together — a trusted space to buy, sell, and exchange coins and notes. But more than that, it’s a community built on shared curiosity and respect for history. Through this website, I aim to support enthusiasts who, like me, see more than just metal and paper — they see stories, craftsmanship, and identity.
+
+This isn’t just a business. It’s a dream born from childhood wonder, shaped by years of dedication, and driven by a heartfelt desire to keep history alive — one coin at a time.</p>
+                <a href="#about" class="hero-cta">Discover Our Story</a>
             </div>
             <div class="hero-image"></div>
         </div>
     </section>
 
-    <!-- COIN CATEGORIES -->
-    <section id="browse" class="section">
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section about-section">
         <div class="container">
-            <div class="coin-categories">
-                <div class="category-card">
-                    <h3>Ancient Coins</h3>
-                    <p>From Roman denarii to Greek drachmas – timeless pieces of history.</p>
-                </div>
-                <div class="category-card">
-                    <h3>World Coins</h3>
-                    <p>Rare finds from every continent, spanning centuries.</p>
-                </div>
-                <div class="category-card">
-                    <h3>Modern Mint Coins</h3>
-                    <p>Contemporary issues with historical significance.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FEATURED LISTINGS -->
-    <section class="section">
-        <div class="container">
-            <h2>Featured New Listings</h2>
-            <div class="featured-listings">
-                <div class="listing-card">
-                    <img src="placeholder-roman-denarius.jpg" alt="Roman Denarius">
-                    <div class="listing-card-content">
-                        <h3>Roman Denarius</h3>
-                        <p class="price">$250</p>
-                        <a href="#" class="cta-btn">View Details</a>
-                    </div>
-                </div>
-                <div class="listing-card">
-                    <img src="placeholder-british-sovereign.jpg" alt="British Sovereign">
-                    <div class="listing-card-content">
-                        <h3>British Sovereign</h3>
-                        <p class="price">$450</p>
-                        <a href="#" class="cta-btn">View Details</a>
-                    </div>
-                </div>
-                <div class="listing-card">
-                    <img src="placeholder-morgan-dollar.jpg" alt="Morgan Dollar">
-                    <div class="listing-card-content">
-                        <h3>Morgan Dollar</h3>
-                        <p class="price">$150</p>
-                        <a href="#" class="cta-btn">View Details</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- HISTORY SECTION -->
-    <section class="section">
-        <div class="container">
-            <h2>This Week in Numismatic History</h2>
-            <div class="history-section">
-                <div class="history-card">
-                    <h3>The Battle of the Pyramids</h3>
-                    <p>Explore coins from the era of Napoleon's campaign in Egypt, July 21, 1798.</p>
-                </div>
-                <div class="history-card">
-                    <h3>Roman Economy & Denarius</h3>
-                    <p>Learn about the impact of the denarius on ancient trade and economy.</p>
-                </div>
-            </div>
+            <h2>Our Mission</h2>
+            <p>At NumisCoin, we are passionate about preserving history through the art of coin collecting. Our platform connects collectors with trusted dealers, offering authenticated coins from ancient times to the modern era.</p>
+            <p>Founded by a team of numismatic enthusiasts, we aim to make coin collecting accessible, transparent, and secure. Whether you're a seasoned collector or just starting, NumisCoin is your trusted partner in building a collection that tells a story.</p>
         </div>
     </section>
 
@@ -711,13 +566,13 @@
     <section class="section">
         <div class="container cta-section">
             <div class="cta-box">
-                <h3>Sell on NumisCoin</h3>
-                <p>Reach thousands of collectors. List your coins today!</p>
-                <a href="sell.html" class="cta-btn">Get Started</a>
+                <h3>Join Our Community</h3>
+                <p>Connect with fellow collectors and explore our curated selection of coins.</p>
+                <a href="index.html" class="cta-btn">Explore Now</a>
             </div>
             <div class="cta-box">
                 <h3>Subscribe to Newsletter</h3>
-                <p>Stay updated on new arrivals and deals.</p>
+                <p>Stay updated on new arrivals and exclusive deals.</p>
                 <form action="#" method="post">
                     <input type="email" placeholder="Your email" required aria-label="Email address" />
                     <button type="submit">Subscribe</button>
