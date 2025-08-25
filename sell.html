@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NumisCoin — Sell Your Coins</title>
+    <style>
+        /* --------------------------- RESET & TOKENS --------------------------- */
+        *, *::before, *::after { box-sizing: border-box; }
+        html:focus-within { scroll-behavior: smooth; }
+        body, h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+        ul[role='list'], ol[role='list'] { list-style: none; margin: 0; padding: 0; }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        button, input, select, textarea { font: inherit; }
+
+        :root {
+            /* Modern 2025 Palette: Vibrant, futuristic, professional */
+            --bg: #F8FAFC; /* Crisp off-white */
+            --surface: #FFFFFF; /* Pure white for cards */
+            --surface-2: #E5E7EB; /* Light gray for depth */
+            --primary: #2563EB; /* Vibrant blue for trust */
+            --primary-600: #1D4ED8; /* Deeper blue for hover */
+            --accent: #D97706; /* Rich amber for numismatic warmth */
+            --text: #0F172A; /* Deep slate for readability */
+            --muted: #64748B; /* Softer gray for secondary */
+            --stroke: rgba(0, 0, 0, 0.08); /* Minimal borders */
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Modern depth */
+            --radius: 8px; /* 2025 aesthetic */
+            --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-size-base: 1rem; /* 16px */
+            --line-height-base: 1.5; /* Readable */
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0F172A;
+                --surface: #1E293B;
+                --surface-2: #334155;
+                --text: #F8FAFC;
+                --muted: #94A3B8;
+                --stroke: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(180deg, rgba(37, 99, 235, 0.05) 0%, transparent 50%), var(--bg);
+            color: var(--text);
+            line-height: var(--line-height-base);
+            font-size: var(--font-size-base);
+            font-weight: 400;
+        }
+
+        .container { max-width: 1360px; margin-inline: auto; padding-inline: 1.5rem; }
+        .section { padding-block: 4rem; }
+
+        /* --------------------------- HEADER --------------------------- */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--stroke);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-inner { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            gap: 1.5rem; 
+            padding: 1rem 0; 
+        }
+        .logo { 
+            font-size: 1.75rem; 
+            font-weight: 800; 
+            color: var(--primary); 
+            letter-spacing: -0.025rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+        }
+        .logo::before { 
+            content: '💰'; 
+            font-size: 1.5rem; 
+        }
+        .search-bar { 
+            flex: 1; 
+            max-width: 32rem; 
+            position: relative; 
+        }
+        .search-input { 
+            width: 100%; 
+            padding: 0.75rem 2.5rem 0.75rem 1rem; 
+            border: 1px solid var(--stroke); 
+            border-radius: var(--radius); 
+            font-size: var(--font-size-base); 
+            background: var(--surface-2); 
+            transition: border-color 0.2s ease, box-shadow 0.2s ease; 
+        }
+        .search-input:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
+            outline: none; 
+        }
+        .search-bar::before { 
+            content: '🔍'; 
+            position: absolute; 
+            right: 0.75rem; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            color: var(--muted); 
+        }
+        #nav-toggle { display: none; }
+        .hamburger { 
+            display: none; 
+            width: 2.25rem; 
+            height: 2.25rem; 
+            flex-direction: column; 
+            justify-content: space-around; 
+            cursor: pointer; 
+            padding: 0.5rem; 
+            border-radius: var(--radius); 
+            background: var(--surface-2); 
+            transition: background 0.2s ease; 
+        }
+        .hamburger:hover { background: color-mix(in oklab, var(--surface-2) 90%, var(--primary)); }
+        .hamburger span { 
+            height: 0.125rem; 
+            background: var(--text); 
+            transition: all 0.3s ease; 
+        }
+        .nav-links { 
+            display: flex; 
+            gap: 1.5rem; 
+            align-items: center; 
+        }
+        .nav-links a { 
+            font-weight: 600; 
+            font-size: 1rem; 
+            color: var(--text); 
+            padding: 0.5rem 1rem; 
+            border-radius: var(--radius); 
+            transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease; 
+        }
+        .nav-links a:hover { 
+            color: var(--primary); 
+            background: rgba(37, 99, 235, 0.1); 
+            transform: translateY(-1px); 
+        }
+        .nav-links a:focus-visible { 
+            outline: 2px solid var(--primary); 
+            outline-offset: 2px; 
+            border-radius: var(--radius); 
+        }
+        .nav-links .cta-btn { 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 0.75rem 1.5rem; 
+            font-weight: 600; 
+            transition: background 0.2s ease, transform 0.2s ease; 
+        }
+        .nav-links .cta-btn:hover { 
+            background: var(--primary-600); 
+            transform: translateY(-2px); 
+        }
+        .nav-links .cta-btn:focus-visible { 
+            outline: 2px solid var(--accent); 
+            outline-offset: 2px; 
+        }
+
+        @media (max-width: 1024px) {
+            .header-inner { flex-wrap: wrap; }
+            .search-bar { order: 3; flex-basis: 100%; margin-top: 1rem; }
+            .hamburger { display: flex; }
+            .nav-links { 
+                display: none; 
+                position: absolute; 
+                top: 100%; 
+                left: 0; 
+                right: 0; 
+                background: var(--surface); 
+                padding: 1.5rem; 
+                border-bottom: 1px solid var(--stroke); 
+                box-shadow: var(--shadow); 
+                flex-direction: column; 
+                gap: 1rem; 
+                transform: translateY(-10px); 
+                opacity: 0; 
+                transition: transform 0.3s ease, opacity 0.3s ease; 
+            }
+            #nav-toggle:checked + .hamburger + .nav-links { 
+                display: flex; 
+                transform: translateY(0); 
+                opacity: 1; 
+            }
+            #nav-toggle:checked + .hamburger span:nth-child(1) { transform: rotate(45deg) translate(0.5rem, 0.5rem); }
+            #nav-toggle:checked + .hamburger span:nth-child(2) { opacity: 0; }
+            #nav-toggle:checked + .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(0.5rem, -0.5rem); }
+            .nav-links .cta-btn { width: 100%; text-align: center; }
+        }
+
+        @media (max-width: 640px) {
+            .logo { font-size: 1.5rem; }
+            .logo::before { font-size: 1.25rem; }
+        }
+
+        /* --------------------------- HERO --------------------------- */
+        .hero { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-600)); 
+            color: #fff; 
+            text-align: center; 
+            padding: 5rem 0; 
+        }
+        .hero h1 { 
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            margin-bottom: 1rem; 
+            letter-spacing: -0.05rem; 
+        }
+        .hero p { 
+            font-size: 1.2rem; 
+            margin-bottom: 1.5rem; 
+            max-width: 50rem; 
+            margin-inline: auto; 
+            font-weight: 400; 
+        }
+        .hero-cta { 
+            background: #fff; 
+            color: var(--primary); 
+            padding: 0.75rem 1.5rem; 
+            border-radius: var(--radius); 
+            font-weight: 600; 
+            transition: background 0.2s ease, transform 0.2s ease; 
+        }
+        .hero-cta:hover { 
+            background: #E5E7EB; 
+            transform: translateY(-2px); 
+        }
+
+        /* --------------------------- SELL FORM --------------------------- */
+        .sell-form { 
+            background: var(--surface); 
+            padding: 2rem; 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow); 
+            max-width: 800px; 
+            margin-inline: auto; 
+        }
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 0.5rem; 
+            margin-bottom: 1.5rem; 
+        }
+        .form-group label { 
+            font-weight: 600; 
+            font-size: 1rem; 
+            color: var(--text); 
+        }
+        .form-group input, .form-group select, .form-group textarea { 
+            padding: 0.75rem; 
+            border: 1px solid var(--stroke); 
+            border-radius: var(--radius); 
+            font-size: var(--font-size-base); 
+            background: var(--surface-2); 
+            transition: border-color 0.2s ease, box-shadow 0.2s ease; 
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
+            outline: none; 
+        }
+        .form-group textarea { 
+            resize: vertical; 
+            min-height: 100px; 
+        }
+        .form-group input[type="file"] { 
+            padding: 0.5rem; 
+            background: transparent; 
+        }
+        .submit-btn { 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 1rem; 
+            border-radius: var(--radius); 
+            font-weight: 600; 
+            text-align: center; 
+            transition: background 0.2s ease, transform 0.2s ease; 
+            display: block; 
+            width: 100%; 
+            cursor: pointer; 
+            border: none; 
+        }
+        .submit-btn:hover { 
+            background: var(--primary-600); 
+            transform: translateY(-2px); 
+        }
+
+        /* --------------------------- CTA SECTION --------------------------- */
+        .cta-section { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 3rem; 
+            max-width: 960px; 
+            margin-inline: auto; 
+        }
+        .cta-box { 
+            background: var(--surface); 
+            padding: 2.5rem; 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow); 
+            text-align: left; 
+            transition: transform 0.2s ease, box-shadow 0.2s ease; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 1rem; 
+        }
+        .cta-box:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+        }
+        .cta-box h3 { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: var(--primary); 
+        }
+        .cta-box p { 
+            color: var(--muted); 
+            font-size: 1rem; 
+            line-height: 1.6; 
+        }
+        .cta-box form { 
+            display: flex; 
+            gap: 0.75rem; 
+            align-items: center; 
+        }
+        .cta-box input { 
+            flex: 1; 
+            padding: 0.75rem; 
+            border: 1px solid var(--stroke); 
+            border-radius: var(--radius); 
+            font-size: var(--font-size-base); 
+            background: var(--surface-2); 
+            transition: border-color 0.2s ease, box-shadow 0.2s ease; 
+        }
+        .cta-box input:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
+            outline: none; 
+        }
+        .cta-box button, .cta-box a.cta-btn { 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 0.75rem 1.5rem; 
+            border-radius: var(--radius); 
+            font-weight: 600; 
+            transition: background 0.2s ease, transform 0.2s ease; 
+            text-align: center; 
+        }
+        .cta-box button:hover, .cta-box a.cta-btn:hover { 
+            background: var(--primary-600); 
+            transform: translateY(-2px); 
+        }
+
+        @media (max-width: 768px) { 
+            .cta-section { grid-template-columns: 1fr; } 
+            .cta-box form { flex-direction: column; }
+            .cta-box input, .cta-box button, .cta-box a.cta-btn { width: 100%; }
+        }
+
+        /* --------------------------- FOOTER --------------------------- */
+        .footer { 
+            background: var(--surface-2); 
+            padding: 2rem 0; 
+            text-align: center; 
+            color: var(--muted); 
+            font-size: 0.875rem; 
+        }
+        .footer a { 
+            color: var(--primary); 
+            transition: color 0.2s ease; 
+        }
+        .footer a:hover { 
+            color: var(--accent); 
+        }
+
+        /* Accessibility: Focus styles */
+        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { 
+            outline: 2px solid var(--primary); 
+            outline-offset: 2px; 
+            border-radius: var(--radius); 
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo" aria-label="NumisCoin Home">NumisCoin</a>
+            <div class="search-bar">
+                <input type="search" class="search-input" placeholder="Search..." aria-label="Search" />
+            </div>
+            <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
+            <label for="nav-toggle" class="hamburger" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="ancient-coins.html">Ancient Coins</a>
+                <a href="world-coins.html">World Coins</a>
+                <a href="modern-coins.html">Modern Coins</a>
+                <a href="sell.html" aria-current="page" class="cta-btn">Sell on NumisCoin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>Sell Your Coins</h1>
+            <p>Upload your coins, set your price, and reach thousands of collectors. List your items easily and securely.</p>
+            <a href="#upload" class="hero-cta">Start Selling</a>
+        </div>
+    </section>
+
+    <!-- SELL FORM -->
+    <section id="upload" class="section">
+        <div class="container">
+            <form class="sell-form" action="#" method="post">
+                <div class="form-group">
+                    <label for="coin-name">Coin Name</label>
+                    <input type="text" id="coin-name" name="coin-name" placeholder="e.g., Roman Denarius" required />
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="number" id="year" name="year" placeholder="e.g., 100" required />
+                </div>
+                <div class="form-group">
+                    <label for="material">Material</label>
+                    <select id="material" name="material" required>
+                        <option value="">Select Material</option>
+                        <option value="silver">Silver</option>
+                        <option value="gold">Gold</option>
+                        <option value="bronze">Bronze</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="condition">Condition</label>
+                    <select id="condition" name="condition" required>
+                        <option value="">Select Condition</option>
+                        <option value="mint">Mint</option>
+                        <option value="fine">Fine</option>
+                        <option value="circulated">Circulated</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price ($)</label>
+                    <input type="number" id="price" name="price" placeholder="e.g., 250" required />
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Provide details about the coin..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="image">Upload Image</label>
+                    <input type="file" id="image" name="image" accept="image/*" required />
+                </div>
+                <button type="submit" class="submit-btn">List Coin for Sale</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="section">
+        <div class="container cta-section">
+            <div class="cta-box">
+                <h3>Subscribe to Newsletter</h3>
+                <p>Stay updated on new arrivals and deals.</p>
+                <form action="#" method="post">
+                    <input type="email" placeholder="Your email" required aria-label="Email address" />
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 NumisCoin. All rights reserved. <a href="#">Code of Ethics</a> | <a href="#">Order Policy</a> | <a href="#">Privacy</a></p>
+        </div>
+    </footer>
+</body>
+</html>
