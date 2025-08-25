@@ -15,21 +15,20 @@
         button, input, select, textarea { font: inherit; }
 
         :root {
-            /* Modern 2025 Palette: Vibrant, futuristic, professional */
-            --bg: #F8FAFC; /* Crisp off-white */
-            --surface: #FFFFFF; /* Pure white for cards */
-            --surface-2: #E5E7EB; /* Light gray for depth */
-            --primary: #2563EB; /* Vibrant blue for trust */
-            --primary-600: #1D4ED8; /* Deeper blue for hover */
-            --accent: #D97706; /* Rich amber for numismatic warmth */
-            --text: #0F172A; /* Deep slate for readability */
-            --muted: #64748B; /* Softer gray for secondary */
-            --stroke: rgba(0, 0, 0, 0.08); /* Minimal borders */
-            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Modern depth */
-            --radius: 8px; /* 2025 aesthetic */
+            --bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-2: #E5E7EB;
+            --primary: #2563EB;
+            --primary-600: #1D4ED8;
+            --accent: #D97706;
+            --text: #0F172A;
+            --muted: #64748B;
+            --stroke: rgba(0, 0, 0, 0.08);
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
             --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-size-base: 1rem; /* 16px */
-            --line-height-base: 1.5; /* Readable */
+            --font-size-base: 1rem;
+            --line-height-base: 1.5;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -53,7 +52,7 @@
         }
 
         .container { max-width: 1360px; margin-inline: auto; padding-inline: 1.5rem; }
-        .section { padding-block: 4rem; }
+        .section { padding-block: 3rem; }
 
         /* --------------------------- HEADER --------------------------- */
         .header {
@@ -79,37 +78,11 @@
             display: flex; 
             align-items: center; 
             gap: 0.5rem; 
+            padding: 0.5rem 1rem;
         }
         .logo::before { 
             content: '💰'; 
             font-size: 1.5rem; 
-        }
-        .search-bar { 
-            flex: 1; 
-            max-width: 32rem; 
-            position: relative; 
-        }
-        .search-input { 
-            width: 100%; 
-            padding: 0.75rem 2.5rem 0.75rem 1rem; 
-            border: 1px solid var(--stroke); 
-            border-radius: var(--radius); 
-            font-size: var(--font-size-base); 
-            background: var(--surface-2); 
-            transition: border-color 0.2s ease, box-shadow 0.2s ease; 
-        }
-        .search-input:focus { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
-            outline: none; 
-        }
-        .search-bar::before { 
-            content: '🔍'; 
-            position: absolute; 
-            right: 0.75rem; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            color: var(--muted); 
         }
         #nav-toggle { display: none; }
         .hamburger { 
@@ -134,6 +107,7 @@
             display: flex; 
             gap: 1.5rem; 
             align-items: center; 
+            position: relative; 
         }
         .nav-links a { 
             font-weight: 600; 
@@ -168,11 +142,68 @@
             outline: 2px solid var(--accent); 
             outline-offset: 2px; 
         }
+        .dropdown { 
+            position: relative; 
+        }
+        .dropdown-toggle { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.25rem; 
+            cursor: pointer; 
+            padding: 0.5rem 1rem; 
+            border-radius: var(--radius); 
+            transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease; 
+        }
+        .dropdown-toggle:hover { 
+            color: var(--primary); 
+            background: rgba(37, 99, 235, 0.1); 
+            transform: translateY(-1px); 
+        }
+        .dropdown-toggle::after { 
+            content: '▼'; 
+            font-size: 0.75rem; 
+            color: var(--muted); 
+            transition: transform 0.3s ease; 
+        }
+        .dropdown:hover .dropdown-toggle::after { 
+            transform: rotate(180deg); 
+        }
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            background: var(--surface); 
+            border: 1px solid var(--stroke); 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow); 
+            min-width: 200px; 
+            z-index: 1000; 
+        }
+        .dropdown:hover .dropdown-menu { 
+            display: block; 
+        }
+        .dropdown-menu a { 
+            display: block; 
+            padding: 0.75rem 1.25rem; 
+            font-weight: 500; 
+            color: var(--text); 
+            transition: background 0.2s ease, color 0.2s ease; 
+        }
+        .dropdown-menu a:hover { 
+            background: rgba(37, 99, 235, 0.1); 
+            color: var(--primary); 
+        }
+        .dropdown-menu a[aria-current="page"] { 
+            background: rgba(37, 99, 235, 0.1); 
+            color: var(--primary); 
+            font-weight: 600; 
+        }
 
         @media (max-width: 1024px) {
             .header-inner { flex-wrap: wrap; }
-            .search-bar { order: 3; flex-basis: 100%; margin-top: 1rem; }
-            .hamburger { display: flex; }
+            .hamburger { display: flex; order: 1; }
+            .logo { order: 2; }
             .nav-links { 
                 display: none; 
                 position: absolute; 
@@ -189,7 +220,7 @@
                 opacity: 0; 
                 transition: transform 0.3s ease, opacity 0.3s ease; 
             }
-            #nav-toggle:checked + .hamburger + .nav-links { 
+            #nav-toggle:checked + .hamburger + .logo + .nav-links { 
                 display: flex; 
                 transform: translateY(0); 
                 opacity: 1; 
@@ -198,6 +229,22 @@
             #nav-toggle:checked + .hamburger span:nth-child(2) { opacity: 0; }
             #nav-toggle:checked + .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(0.5rem, -0.5rem); }
             .nav-links .cta-btn { width: 100%; text-align: center; }
+            .dropdown-menu { 
+                position: static; 
+                box-shadow: none; 
+                border: none; 
+                background: transparent; 
+                padding: 0.5rem 1rem; 
+            }
+            .dropdown:hover .dropdown-menu { 
+                display: block; 
+            }
+            .dropdown-toggle::after { 
+                content: '▶'; 
+            }
+            .dropdown:hover .dropdown-toggle::after { 
+                transform: rotate(90deg); 
+            }
         }
 
         @media (max-width: 640px) {
@@ -206,191 +253,283 @@
         }
 
         /* --------------------------- HERO --------------------------- */
-        .hero { 
-            background: linear-gradient(135deg, var(--primary), var(--primary-600)); 
-            color: #fff; 
-            text-align: center; 
-            padding: 5rem 0; 
+        .hero {
+            position: relative;
+            padding: 2rem 0;
+            overflow: hidden;
         }
-        .hero h1 { 
-            font-size: 2.5rem; 
-            font-weight: 700; 
-            margin-bottom: 1rem; 
-            letter-spacing: -0.05rem; 
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
         }
-        .hero p { 
-            font-size: 1.2rem; 
-            margin-bottom: 1.5rem; 
-            max-width: 50rem; 
-            margin-inline: auto; 
-            font-weight: 400; 
+        .hero-content {
+            padding: 2rem;
         }
-        .hero-cta { 
-            background: #fff; 
-            color: var(--primary); 
-            padding: 0.75rem 1.5rem; 
-            border-radius: var(--radius); 
-            font-weight: 600; 
-            transition: background 0.2s ease, transform 0.2s ease; 
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.05rem;
         }
-        .hero-cta:hover { 
-            background: #E5E7EB; 
-            transform: translateY(-2px); 
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            max-width: 32rem;
+            font-weight: 400;
+        }
+        .hero-cta {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: background 0.2s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+        .hero-cta:hover {
+            background: var(--primary-600);
+            transform: translateY(-2px);
+        }
+        .hero-image {
+            position: relative;
+            height: 100%;
+            min-height: 300px;
+            background: url('placeholder-hero-sell.jpg') center/cover no-repeat;
+            border-radius: var(--radius);
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(217, 119, 6, 0.2));
+            border-radius: var(--radius);
+        }
+        .hero.scrolled .hero-image {
+            transform: translateY(20px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .hero-image {
+                min-height: 200px;
+            }
         }
 
         /* --------------------------- SELL FORM --------------------------- */
-        .sell-form { 
-            background: var(--surface); 
-            padding: 2rem; 
-            border-radius: var(--radius); 
-            box-shadow: var(--shadow); 
-            max-width: 800px; 
-            margin-inline: auto; 
+        .sell-section {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
-        .form-group { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 0.5rem; 
-            margin-bottom: 1.5rem; 
+        .sell-section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .form-group label { 
-            font-weight: 600; 
-            font-size: 1rem; 
-            color: var(--text); 
+        .sell-section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
-        .form-group input, .form-group select, .form-group textarea { 
-            padding: 0.75rem; 
-            border: 1px solid var(--stroke); 
-            border-radius: var(--radius); 
-            font-size: var(--font-size-base); 
-            background: var(--surface-2); 
-            transition: border-color 0.2s ease, box-shadow 0.2s ease; 
+        .sell-form {
+            display: grid;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
-            outline: none; 
+        .sell-form label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
         }
-        .form-group textarea { 
-            resize: vertical; 
-            min-height: 100px; 
+        .sell-form input,
+        .sell-form select,
+        .sell-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            font-size: var(--font-size-base);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .form-group input[type="file"] { 
-            padding: 0.5rem; 
-            background: transparent; 
+        .sell-form input:focus,
+        .sell-form select:focus,
+        .sell-form textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
         }
-        .submit-btn { 
-            background: var(--primary); 
-            color: #fff; 
-            padding: 1rem; 
-            border-radius: var(--radius); 
-            font-weight: 600; 
-            text-align: center; 
-            transition: background 0.2s ease, transform 0.2s ease; 
-            display: block; 
-            width: 100%; 
-            cursor: pointer; 
-            border: none; 
+        .sell-form textarea {
+            resize: vertical;
+            min-height: 120px;
         }
-        .submit-btn:hover { 
-            background: var(--primary-600); 
-            transform: translateY(-2px); 
+        .sell-form button {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .sell-form button:hover {
+            background: var(--primary-600);
+            transform: translateY(-2px);
         }
 
         /* --------------------------- CTA SECTION --------------------------- */
-        .cta-section { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 2rem; 
-            margin-top: 3rem; 
-            max-width: 960px; 
-            margin-inline: auto; 
+        .cta-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            max-width: 800px;
+            margin-inline: auto;
         }
-        .cta-box { 
-            background: var(--surface); 
-            padding: 2.5rem; 
-            border-radius: var(--radius); 
-            box-shadow: var(--shadow); 
-            text-align: left; 
-            transition: transform 0.2s ease, box-shadow 0.2s ease; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 1rem; 
+        .cta-box {
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .cta-box:hover { 
-            transform: translateY(-4px); 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
+        .cta-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
-        .cta-box h3 { 
-            font-size: 1.5rem; 
-            font-weight: 700; 
-            color: var(--primary); 
+        .cta-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
         }
-        .cta-box p { 
-            color: var(--muted); 
-            font-size: 1rem; 
-            line-height: 1.6; 
+        .cta-box p {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
-        .cta-box form { 
-            display: flex; 
-            gap: 0.75rem; 
-            align-items: center; 
+        .cta-box form {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
         }
-        .cta-box input { 
-            flex: 1; 
-            padding: 0.75rem; 
-            border: 1px solid var(--stroke); 
-            border-radius: var(--radius); 
-            font-size: var(--font-size-base); 
-            background: var(--surface-2); 
-            transition: border-color 0.2s ease, box-shadow 0.2s ease; 
+        .cta-box input {
+            padding: 0.75rem;
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            font-size: var(--font-size-base);
+            max-width: 300px;
         }
-        .cta-box input:focus { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
-            outline: none; 
+        .cta-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
         }
-        .cta-box button, .cta-box a.cta-btn { 
-            background: var(--primary); 
-            color: #fff; 
-            padding: 0.75rem 1.5rem; 
-            border-radius: var(--radius); 
-            font-weight: 600; 
-            transition: background 0.2s ease, transform 0.2s ease; 
-            text-align: center; 
+        .cta-box button {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
         }
-        .cta-box button:hover, .cta-box a.cta-btn:hover { 
-            background: var(--primary-600); 
-            transform: translateY(-2px); 
+        .cta-box button:hover {
+            background: var(--primary-600);
+            transform: translateY(-2px);
         }
 
-        @media (max-width: 768px) { 
-            .cta-section { grid-template-columns: 1fr; } 
-            .cta-box form { flex-direction: column; }
-            .cta-box input, .cta-box button, .cta-box a.cta-btn { width: 100%; }
+        @media (max-width: 768px) {
+            .cta-box form {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-box input, .cta-box button {
+                width: 100%;
+                max-width: none;
+            }
         }
 
         /* --------------------------- FOOTER --------------------------- */
-        .footer { 
-            background: var(--surface-2); 
-            padding: 2rem 0; 
-            text-align: center; 
-            color: var(--muted); 
-            font-size: 0.875rem; 
+        .footer {
+            background: var(--surface-2);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.875rem;
         }
-        .footer a { 
-            color: var(--primary); 
-            transition: color 0.2s ease; 
+        .footer a {
+            color: var(--primary);
+            transition: color 0.2s ease;
         }
-        .footer a:hover { 
-            color: var(--accent); 
+        .footer a:hover {
+            color: var(--accent);
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+        .footer-social {
+            margin-bottom: 0.5rem;
+        }
+        .footer-social h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .social-icons a {
+            font-size: 1.5rem;
+            color: var(--muted);
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .social-icons a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .footer-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
         }
 
         /* Accessibility: Focus styles */
-        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { 
-            outline: 2px solid var(--primary); 
-            outline-offset: 2px; 
-            border-radius: var(--radius); 
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: var(--radius);
+        }
+
+        /* Animation for section visibility */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -399,9 +538,6 @@
     <header class="header">
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="NumisCoin Home">NumisCoin</a>
-            <div class="search-bar">
-                <input type="search" class="search-input" placeholder="Search..." aria-label="Search" />
-            </div>
             <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
             <label for="nav-toggle" class="hamburger" aria-hidden="true">
                 <span></span>
@@ -409,68 +545,82 @@
                 <span></span>
             </label>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="ancient-coins.html">Ancient Coins</a>
-                <a href="world-coins.html">World Coins</a>
-                <a href="modern-coins.html">Modern Coins</a>
-                <a href="sell.html" aria-current="page" class="cta-btn">Sell on NumisCoin</a>
+                <a href="index.html">Home</a>
+                <div class="dropdown">
+                    <span class="dropdown-toggle">Coins</span>
+                    <div class="dropdown-menu">
+                        <a href="ancient.html">Ancient Coins</a>
+                        <a href="world.html">World Coins</a>
+                        <a href="modern.html">Modern Coins</a>
+                    </div>
+                </div>
+                <a href="about.html">About Us</a>
+                <a href="sell.html" class="cta-btn" aria-current="page">Sell and Purchase</a>
+                <a href="contact.html">Contact Us</a>
             </nav>
         </div>
     </header>
 
     <!-- HERO -->
     <section class="hero">
-        <div class="container">
-            <h1>Sell Your Coins</h1>
-            <p>Upload your coins, set your price, and reach thousands of collectors. List your items easily and securely.</p>
-            <a href="#upload" class="hero-cta">Start Selling</a>
+        <div class="container hero-inner">
+            <div class="hero-content">
+                <h1>Sell Your Coins</h1>
+                <p>Upload your coins, set your price, and reach thousands of collectors. List your items easily and securely.</p>
+                <a href="#sell" class="hero-cta">Start Selling</a>
+            </div>
+            <div class="hero-image"></div>
         </div>
     </section>
 
     <!-- SELL FORM -->
-    <section id="upload" class="section">
+    <section id="sell" class="section">
         <div class="container">
-            <form class="sell-form" action="#" method="post">
-                <div class="form-group">
-                    <label for="coin-name">Coin Name</label>
-                    <input type="text" id="coin-name" name="coin-name" placeholder="e.g., Roman Denarius" required />
-                </div>
-                <div class="form-group">
-                    <label for="year">Year</label>
-                    <input type="number" id="year" name="year" placeholder="e.g., 100" required />
-                </div>
-                <div class="form-group">
-                    <label for="material">Material</label>
-                    <select id="material" name="material" required>
-                        <option value="">Select Material</option>
-                        <option value="silver">Silver</option>
-                        <option value="gold">Gold</option>
-                        <option value="bronze">Bronze</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="condition">Condition</label>
-                    <select id="condition" name="condition" required>
-                        <option value="">Select Condition</option>
-                        <option value="mint">Mint</option>
-                        <option value="fine">Fine</option>
-                        <option value="circulated">Circulated</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="price">Price ($)</label>
-                    <input type="number" id="price" name="price" placeholder="e.g., 250" required />
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" placeholder="Provide details about the coin..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="image">Upload Image</label>
-                    <input type="file" id="image" name="image" accept="image/*" required />
-                </div>
-                <button type="submit" class="submit-btn">List Coin for Sale</button>
-            </form>
+            <div class="sell-section">
+                <h2>List Your Coin</h2>
+                <form class="sell-form" action="#" method="post">
+                    <div>
+                        <label for="coin-name">Coin Name</label>
+                        <input type="text" id="coin-name" name="coin-name" placeholder="Coin name" required aria-label="Coin name" />
+                    </div>
+                    <div>
+                        <label for="year">Year</label>
+                        <input type="text" id="year" name="year" placeholder="Year" required aria-label="Year" />
+                    </div>
+                    <div>
+                        <label for="material">Material</label>
+                        <select id="material" name="material" required aria-label="Material">
+                            <option value="" disabled selected>Select Material</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="condition">Condition</label>
+                        <select id="condition" name="condition" required aria-label="Condition">
+                            <option value="" disabled selected>Select Condition</option>
+                            <option value="Mint">Mint</option>
+                            <option value="Fine">Fine</option>
+                            <option value="Circulated">Circulated</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="price">Price ($)</label>
+                        <input type="number" id="price" name="price" placeholder="Price" required aria-label="Price" />
+                    </div>
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Description" required aria-label="Description"></textarea>
+                    </div>
+                    <div>
+                        <label for="image">Upload Image</label>
+                        <input type="file" id="image" name="image" accept="image/*" required aria-label="Upload image" />
+                    </div>
+                    <button type="submit">List Coin for Sale</button>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -491,8 +641,46 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 NumisCoin. All rights reserved. <a href="#">Code of Ethics</a> | <a href="#">Order Policy</a> | <a href="#">Privacy</a></p>
+            <div class="footer-content">
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/numiscoin" aria-label="Instagram" title="Follow us on Instagram">📷</a>
+                        <a href="https://facebook.com/numiscoin" aria-label="Facebook" title="Follow us on Facebook">📘</a>
+                        <a href="https://x.com/numiscoin" aria-label="Twitter" title="Follow us on Twitter">🐦</a>
+                        <a href="https://linkedin.com/company/numiscoin" aria-label="LinkedIn" title="Follow us on LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <p>&copy; 2025 NumisCoin. All rights reserved. <a href="#">Code of Ethics</a> | <a href="#">Order Policy</a> | <a href="#">Privacy</a></p>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Parallax effect for hero image
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            if (hero.getBoundingClientRect().top < window.innerHeight) {
+                hero.classList.add('scrolled');
+            } else {
+                hero.classList.remove('scrolled');
+            }
+        });
+
+        // Fade-in effect for sell section
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.sell-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
