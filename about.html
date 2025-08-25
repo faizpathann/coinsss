@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>NumisCoin — About Us</title>
+    <title>NumisCoin — Home</title>
     <style>
         /* --------------------------- RESET & TOKENS --------------------------- */
         *, *::before, *::after { box-sizing: border-box; }
@@ -15,21 +15,20 @@
         button, input, select, textarea { font: inherit; }
 
         :root {
-            /* Original NumisCoin Palette */
-            --bg: #F8FAFC; /* Crisp off-white */
-            --surface: #FFFFFF; /* Pure white for cards */
-            --surface-2: #E5E7EB; /* Light gray for depth */
-            --primary: #2563EB; /* Vibrant blue for trust */
-            --primary-600: #1D4ED8; /* Deeper blue for hover */
-            --accent: #D97706; /* Rich amber for numismatic warmth */
-            --text: #0F172A; /* Deep slate for readability */
-            --muted: #64748B; /* Softer gray for secondary */
-            --stroke: rgba(0, 0, 0, 0.08); /* Minimal borders */
-            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1); /* Modern depth */
-            --radius: 8px; /* 2025 aesthetic */
+            --bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-2: #E5E7EB;
+            --primary: #2563EB;
+            --primary-600: #1D4ED8;
+            --accent: #D97706;
+            --text: #0F172A;
+            --muted: #64748B;
+            --stroke: rgba(0, 0, 0, 0.08);
+            --shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
             --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-size-base: 1rem; /* 16px */
-            --line-height-base: 1.5; /* Readable */
+            --font-size-base: 1rem;
+            --line-height-base: 1.5;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -79,37 +78,11 @@
             display: flex; 
             align-items: center; 
             gap: 0.5rem; 
+            padding: 0.5rem 1rem;
         }
         .logo::before { 
             content: '💰'; 
             font-size: 1.5rem; 
-        }
-        .search-bar { 
-            flex: 1; 
-            max-width: 32rem; 
-            position: relative; 
-        }
-        .search-input { 
-            width: 100%; 
-            padding: 0.75rem 2.5rem 0.75rem 1rem; 
-            border: 1px solid var(--stroke); 
-            border-radius: var(--radius); 
-            font-size: var(--font-size-base); 
-            background: var(--surface-2); 
-            transition: border-color 0.2s ease, box-shadow 0.2s ease; 
-        }
-        .search-input:focus { 
-            border-color: var(--primary); 
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); 
-            outline: none; 
-        }
-        .search-bar::before { 
-            content: '🔍'; 
-            position: absolute; 
-            right: 0.75rem; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            color: var(--muted); 
         }
         #nav-toggle { display: none; }
         .hamburger { 
@@ -134,6 +107,7 @@
             display: flex; 
             gap: 1.5rem; 
             align-items: center; 
+            position: relative; 
         }
         .nav-links a { 
             font-weight: 600; 
@@ -168,11 +142,68 @@
             outline: 2px solid var(--accent); 
             outline-offset: 2px; 
         }
+        .dropdown { 
+            position: relative; 
+        }
+        .dropdown-toggle { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.25rem; 
+            cursor: pointer; 
+            padding: 0.5rem 1rem; 
+            border-radius: var(--radius); 
+            transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease; 
+        }
+        .dropdown-toggle:hover { 
+            color: var(--primary); 
+            background: rgba(37, 99, 235, 0.1); 
+            transform: translateY(-1px); 
+        }
+        .dropdown-toggle::after { 
+            content: '▼'; 
+            font-size: 0.75rem; 
+            color: var(--muted); 
+            transition: transform 0.3s ease; 
+        }
+        .dropdown:hover .dropdown-toggle::after { 
+            transform: rotate(180deg); 
+        }
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 0; 
+            background: var(--surface); 
+            border: 1px solid var(--stroke); 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow); 
+            min-width: 200px; 
+            z-index: 1000; 
+        }
+        .dropdown:hover .dropdown-menu { 
+            display: block; 
+        }
+        .dropdown-menu a { 
+            display: block; 
+            padding: 0.75rem 1.25rem; 
+            font-weight: 500; 
+            color: var(--text); 
+            transition: background 0.2s ease, color 0.2s ease; 
+        }
+        .dropdown-menu a:hover { 
+            background: rgba(37, 99, 235, 0.1); 
+            color: var(--primary); 
+        }
+        .dropdown-menu a[aria-current="page"] { 
+            background: rgba(37, 99, 235, 0.1); 
+            color: var(--primary); 
+            font-weight: 600; 
+        }
 
         @media (max-width: 1024px) {
             .header-inner { flex-wrap: wrap; }
-            .search-bar { order: 3; flex-basis: 100%; margin-top: 1rem; }
-            .hamburger { display: flex; }
+            .hamburger { display: flex; order: 1; }
+            .logo { order: 2; }
             .nav-links { 
                 display: none; 
                 position: absolute; 
@@ -189,7 +220,7 @@
                 opacity: 0; 
                 transition: transform 0.3s ease, opacity 0.3s ease; 
             }
-            #nav-toggle:checked + .hamburger + .nav-links { 
+            #nav-toggle:checked + .hamburger + .logo + .nav-links { 
                 display: flex; 
                 transform: translateY(0); 
                 opacity: 1; 
@@ -198,6 +229,22 @@
             #nav-toggle:checked + .hamburger span:nth-child(2) { opacity: 0; }
             #nav-toggle:checked + .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(0.5rem, -0.5rem); }
             .nav-links .cta-btn { width: 100%; text-align: center; }
+            .dropdown-menu { 
+                position: static; 
+                box-shadow: none; 
+                border: none; 
+                background: transparent; 
+                padding: 0.5rem 1rem; 
+            }
+            .dropdown:hover .dropdown-menu { 
+                display: block; 
+            }
+            .dropdown-toggle::after { 
+                content: '▶'; 
+            }
+            .dropdown:hover .dropdown-toggle::after { 
+                transform: rotate(90deg); 
+            }
         }
 
         @media (max-width: 640px) {
@@ -249,7 +296,7 @@
             position: relative;
             height: 100%;
             min-height: 300px;
-            background: url('placeholder-hero-about.jpg') center/cover no-repeat;
+            background: url('placeholder-hero-home.jpg') center/cover no-repeat;
             border-radius: var(--radius);
             transform: translateY(0);
             transition: transform 0.5s ease;
@@ -278,32 +325,124 @@
             }
         }
 
-        /* --------------------------- BIOGRAPHY SECTION --------------------------- */
-        .bio-section {
+        /* --------------------------- COIN CATEGORIES --------------------------- */
+        .coin-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .category-card {
             background: var(--surface);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s ease;
         }
-        .bio-section.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .category-card:hover {
+            transform: translateY(-4px);
         }
-        .bio-section h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
+        .category-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
-        .bio-section p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--text);
-            margin-bottom: 1rem;
+        .category-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* --------------------------- FEATURED LISTINGS --------------------------- */
+        .featured-listings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .listing-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        .listing-card:hover {
+            transform: translateY(-4px);
+        }
+        .listing-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .listing-card-content {
+            padding: 1.5rem;
+        }
+        .listing-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .listing-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        .listing-card .price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .listing-card a.cta-btn {
+            display: block;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-align: center;
+            margin-top: 1rem;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .listing-card a.cta-btn:hover {
+            background: var(--primary-600);
+            transform: translateY(-2px);
+        }
+
+        /* --------------------------- HISTORY SECTION --------------------------- */
+        .history-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .history-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            transition: transform 0.2s ease;
+        }
+        .history-card:hover {
+            transform: translateY(-4px);
+        }
+        .history-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .history-card p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .history-section {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* --------------------------- CTA SECTION --------------------------- */
@@ -339,27 +478,7 @@
             line-height: 1.6;
             margin-bottom: 1rem;
         }
-        .cta-box form {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: center;
-        }
-        .cta-box input {
-            flex: 1;
-            max-width: 300px;
-            padding: 0.75rem;
-            border: 1px solid var(--stroke);
-            border-radius: var(--radius);
-            font-size: var(--font-size-base);
-            background: var(--surface-2);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-        .cta-box input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-            outline: none;
-        }
-        .cta-box button, .cta-box a.cta-btn {
+        .cta-box a.cta-btn {
             background: var(--primary);
             color: #fff;
             padding: 0.75rem 1.5rem;
@@ -367,7 +486,38 @@
             font-weight: 600;
             transition: background 0.2s ease, transform 0.2s ease;
         }
-        .cta-box button:hover, .cta-box a.cta-btn:hover {
+        .cta-box a.cta-btn:hover {
+            background: var(--primary-600);
+            transform: translateY(-2px);
+        }
+        .cta-box form {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .cta-box input {
+            padding: 0.75rem;
+            border: 1px solid var(--stroke);
+            border-radius: var(--radius);
+            background: var(--surface-2);
+            font-size: var(--font-size-base);
+            max-width: 300px;
+        }
+        .cta-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+        .cta-box button {
+            background: var(--primary);
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .cta-box button:hover {
             background: var(--primary-600);
             transform: translateY(-2px);
         }
@@ -377,7 +527,7 @@
                 flex-direction: column;
                 align-items: center;
             }
-            .cta-box input, .cta-box button, .cta-box a.cta-btn {
+            .cta-box input, .cta-box button {
                 width: 100%;
                 max-width: none;
             }
@@ -398,9 +548,43 @@
         .footer a:hover {
             color: var(--accent);
         }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+        }
+        .footer-social {
+            margin-bottom: 0.5rem;
+        }
+        .footer-social h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .social-icons a {
+            font-size: 1.5rem;
+            color: var(--muted);
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .social-icons a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .footer-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
 
         /* Accessibility: Focus styles */
-        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
             outline: 2px solid var(--primary);
             outline-offset: 2px;
             border-radius: var(--radius);
@@ -418,9 +602,6 @@
     <header class="header">
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="NumisCoin Home">NumisCoin</a>
-            <div class="search-bar">
-                <input type="search" class="search-input" placeholder="Search..." aria-label="Search" />
-            </div>
             <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
             <label for="nav-toggle" class="hamburger" aria-hidden="true">
                 <span></span>
@@ -428,10 +609,18 @@
                 <span></span>
             </label>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="ancient-coins.html">Ancient Coins</a>
-                <a href="world-coins.html">World Coins</a>
-                <a href="modern-coins.html">Modern Coins</a>
-                <a href="sell.html" class="cta-btn">Sell on NumisCoin</a>
+                <a href="index.html" class="cta-btn">Home</a>
+                <div class="dropdown">
+                    <span class="dropdown-toggle">Coins</span>
+                    <div class="dropdown-menu">
+                        <a href="ancient.html">Ancient Coins</a>
+                        <a href="world.html">World Coins</a>
+                        <a href="modern.html">Modern Coins</a>
+                    </div>
+                </div>
+                <a href="about.html">About Us</a>
+                <a href="sell.html" >Sell and Purchase</a>
+                <a href="contact.html">Contact Us</a>
             </nav>
         </div>
     </header>
@@ -440,23 +629,80 @@
     <section class="hero">
         <div class="container hero-inner">
             <div class="hero-content">
-                <h1>About NumisCoin</h1>
-                <p>A platform born from a lifelong passion for numismatics, connecting collectors to preserve history, one coin at a time.</p>
-                <a href="#bio" class="hero-cta">Meet the Founder</a>
+                <h1>Discover Rare Coins from Around the World</h1>
+                <p>Explore authenticated ancient, world, and modern coins from trusted dealers. Build your collection with confidence.</p>
+                <a href="#browse" class="hero-cta">Browse Now</a>
             </div>
             <div class="hero-image"></div>
         </div>
     </section>
 
-    <!-- BIOGRAPHY SECTION -->
-    <section id="bio" class="section">
+    <!-- COIN CATEGORIES -->
+    <section id="browse" class="section">
         <div class="container">
-            <div class="bio-section">
-                <h2>Faizan Pathan — A Journey from Dhar to the World of Numismatics</h2>
-                <p>My name is Faizan Pathan, and I hail from Dhar, Madhya Pradesh. Since childhood, I’ve been deeply fascinated by coins and currency notes. While other kids were drawn to toys and games, I found myself captivated by the stories etched into old coins and the designs printed on faded notes. Each piece felt like a portal to another time — a silent witness to history.</p>
-                <p>What began as a simple hobby soon grew into a lifelong passion. I started collecting not just for the sake of possession, but to understand the art, culture, and legacy behind each item. For me, numismatics is not just about collecting — it’s about preserving heritage, discovering forgotten tales, and connecting with the past in a tangible way.</p>
-                <p>This passion inspired me to create a platform where fellow collectors can come together — a trusted space to buy, sell, and exchange coins and notes. But more than that, it’s a community built on shared curiosity and respect for history. Through this website, I aim to support enthusiasts who, like me, see more than just metal and paper — they see stories, craftsmanship, and identity.</p>
-                <p>This isn’t just a business. It’s a dream born from childhood wonder, shaped by years of dedication, and driven by a heartfelt desire to keep history alive — one coin at a time.</p>
+            <div class="coin-categories">
+                <div class="category-card">
+                    <h3>Ancient Coins</h3>
+                    <p>From Roman denarii to Greek drachmas – timeless pieces of history.</p>
+                </div>
+                <div class="category-card">
+                    <h3>World Coins</h3>
+                    <p>Rare finds from every continent, spanning centuries.</p>
+                </div>
+                <div class="category-card">
+                    <h3>Modern Mint Coins</h3>
+                    <p>Contemporary issues with historical significance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED LISTINGS -->
+    <section class="section">
+        <div class="container">
+            <h2>Featured New Listings</h2>
+            <div class="featured-listings">
+                <div class="listing-card">
+                    <img src="placeholder-roman-denarius.jpg" alt="Roman Denarius">
+                    <div class="listing-card-content">
+                        <h3>Roman Denarius</h3>
+                        <p class="price">$250</p>
+                        <a href="#" class="cta-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="listing-card">
+                    <img src="placeholder-british-sovereign.jpg" alt="British Sovereign">
+                    <div class="listing-card-content">
+                        <h3>British Sovereign</h3>
+                        <p class="price">$450</p>
+                        <a href="#" class="cta-btn">View Details</a>
+                    </div>
+                </div>
+                <div class="listing-card">
+                    <img src="placeholder-morgan-dollar.jpg" alt="Morgan Dollar">
+                    <div class="listing-card-content">
+                        <h3>Morgan Dollar</h3>
+                        <p class="price">$150</p>
+                        <a href="#" class="cta-btn">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HISTORY SECTION -->
+    <section class="section">
+        <div class="container">
+            <h2>This Week in Numismatic History</h2>
+            <div class="history-section">
+                <div class="history-card">
+                    <h3>The Battle of the Pyramids</h3>
+                    <p>Explore coins from the era of Napoleon's campaign in Egypt, July 21, 1798.</p>
+                </div>
+                <div class="history-card">
+                    <h3>Roman Economy & Denarius</h3>
+                    <p>Learn about the impact of the denarius on ancient trade and economy.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -465,13 +711,13 @@
     <section class="section">
         <div class="container cta-section">
             <div class="cta-box">
-                <h3>Join Our Community</h3>
-                <p>Connect with fellow collectors and share your passion for numismatics. Start buying, selling, or exploring today!</p>
+                <h3>Sell on NumisCoin</h3>
+                <p>Reach thousands of collectors. List your coins today!</p>
                 <a href="sell.html" class="cta-btn">Get Started</a>
             </div>
             <div class="cta-box">
                 <h3>Subscribe to Newsletter</h3>
-                <p>Stay updated on new arrivals, deals, and numismatic stories.</p>
+                <p>Stay updated on new arrivals and deals.</p>
                 <form action="#" method="post">
                     <input type="email" placeholder="Your email" required aria-label="Email address" />
                     <button type="submit">Subscribe</button>
@@ -483,7 +729,20 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 NumisCoin. All rights reserved. <a href="#">Code of Ethics</a> | <a href="#">Order Policy</a> | <a href="#">Privacy</a></p>
+            <div class="footer-content">
+                <div class="footer-social">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="https://instagram.com/numiscoin" aria-label="Instagram" title="Follow us on Instagram">📷</a>
+                        <a href="https://facebook.com/numiscoin" aria-label="Facebook" title="Follow us on Facebook">📘</a>
+                        <a href="https://x.com/numiscoin" aria-label="Twitter" title="Follow us on Twitter">🐦</a>
+                        <a href="https://linkedin.com/company/numiscoin" aria-label="LinkedIn" title="Follow us on LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <p>&copy; 2025 NumisCoin. All rights reserved. <a href="#">Code of Ethics</a> | <a href="#">Order Policy</a> | <a href="#">Privacy</a></p>
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -498,7 +757,7 @@
             }
         });
 
-        // Fade-in effect for bio section
+        // Fade-in effect for sections
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -507,7 +766,7 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.bio-section').forEach(section => {
+        document.querySelectorAll('.section').forEach(section => {
             observer.observe(section);
         });
     </script>
